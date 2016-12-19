@@ -1,5 +1,9 @@
 # Ember SSE(Server Sent Event)
 
+[![Build Status](https://travis-ci.org/chauhraj/ember-sse.svg?branch=master)](https://travis-ci.org/chauhraj/ember-sse)
+[![EmberJS](https://img.shields.io/badge/emberjs-2.10.0-orange.svg)]()
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
+
 This addon enables the ability to add [Server Sent Events](https://www.html5rocks.com/en/tutorials/eventsource/basics/) in Emberjs APPs. The capability is added as a service. The service itself is named as `event-sse`.
 
 This README outlines the details of collaborating on this Ember addon.

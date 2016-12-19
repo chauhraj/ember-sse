@@ -17,6 +17,8 @@ This README outlines the details of collaborating on this Ember addon.
 
 ## Running Tests
 
+> Still learning Ember. Still need to write tests. Becomes difficult to test something like EventSource.
+
 * `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
 * `ember test`
 * `ember test --server`

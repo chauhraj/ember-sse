@@ -1,18 +1,19 @@
-# ember-sse
+# Ember SSE(Server Sent Event)
+
+This addon enables the ability to add [Server Sent Events](https://www.html5rocks.com/en/tutorials/eventsource/basics/) in Emberjs APPs. The capability is added as a service. The service itself is named as `event-sse`.
 
 This README outlines the details of collaborating on this Ember addon.
 
 ## Installation
 
+### Development Version
 * `git clone <repository-url>` this repository
-* `cd ember-sse`
-* `npm install`
-* `bower install`
+* `cd ember-sse && npm install && bower install`
+* Execute, `npm link` in directory `ember-sse` and then in the root project, execute `npm link ember-sse`
 
-## Running
-
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+### Prodution Version
+* Work in Progress.
+* Though it should be as simple as executing `ember install ember-sse`
 
 ## Running Tests
 

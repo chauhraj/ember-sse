@@ -17,7 +17,8 @@ module('Unit | Instance Initializer | event sse', {
 });
 
 // Replace this with your real tests.
-test('it works', function(assert) {
+test('it fails', function(assert) {
+  console.log("Found instance:" + this.appInstance);
   initialize(this.appInstance);
 
   // you would normally confirm the results of the initializer here

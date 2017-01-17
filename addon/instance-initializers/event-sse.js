@@ -10,28 +10,34 @@ function subscribeSSE(appInstance, eventDefinition) {
    let store = appInstance.lookup('service:store');
 
    let eventType = eventDefinition.eventType;
-   let pluralized = S.camelize( pluralize(eventType) );
+   let pluralized = S.camelize( pluralize(eventDefinition.eventName) );
    let supportJsonApi = eventDefinition.supportJsonApi;
 
    let url;
-   if(typeof eventDefinition.sseOrigin === undefined) {
+   if(typeof eventDefinition.origin === undefined) {
       url = `/subscribe/${pluralized}`;
    } else {
-      url = `${eventDefinition.sseOrigin}/subscribe/${pluralized}`;
+      url = `${eventDefinition.origin}/subscribe/${pluralized}`;
    }
-   sseService.subscribe(url, eventType, (message) => {
+   sseService.subscribe(url, eventDefinition.eventName, (message) => {
      let data = JSON.parse(message.data);
      switch(eventType) {
        case 'update':
-          let normalized;
-          if(supportJsonApi) {
-            normalized = data;
+          let offline = eventDefinition.offline === undefined || eventDefinition.offline;
+          if(offline) {
+            let record = store.createRecord(eventDefinition.eventName, data);
+            record.save();
           } else {
-            let modelClass = store.modelFor(eventType);
-            let serializer = store.serializerFor(eventType);
-            normalized =  serializer.normalizeSingleResponse(store, modelClass, data);
+            let normalized;
+            if(supportJsonApi) {
+              normalized = data;
+            } else {
+              let modelClass = store.modelFor(eventDefinition.eventName);
+              let serializer = store.serializerFor(eventDefinition.eventName);
+              normalized =  serializer.normalizeSingleResponse(store, modelClass, data);
+            }
+            store.push(normalized);
           }
-          store.push(normalized);
           break;
        case 'notification':
           Logger.warn(message);
@@ -61,8 +67,8 @@ export function initialize(appInstance) {
   } else {
     let sseDefaultOrigin = eventSSEConfig.origin;
     eventSSEConfig['configuration'].forEach((eventDefinition) => {
-      if(typeof eventDefinition.sseOrigin === undefined && sseDefaultOrigin !== undefined) {
-        eventDefinition.sseOrigin = sseDefaultOrigin;
+      if(typeof eventDefinition.origin === undefined && sseDefaultOrigin !== undefined) {
+        eventDefinition.origin = sseDefaultOrigin;
       }
       subscribeSSE(appInstance, eventDefinition);
     });

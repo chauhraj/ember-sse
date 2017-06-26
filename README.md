@@ -9,7 +9,7 @@ the applications mostly require push updates or notifications, then in such case
 The add on adds SSE as a service named as `event-sse`. All the SSE can be configured through the configuration
 defined in `environment.js` of the application itself. 
 
-```json
+```javascript
 APP: {
     'event-sse': {
         origin: <optional url if reading SSE from external host/origin> // eg: http://my-machine:8000

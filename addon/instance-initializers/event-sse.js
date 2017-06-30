@@ -22,7 +22,7 @@ function subscribeSSE(appInstance, eventDefinition) {
    sseService.subscribe(url, eventDefinition.eventName, (message) => {
      let data = JSON.parse(message.data);
      switch(eventType) {
-       case 'update':
+       case 'update': {
           let offline = eventDefinition.offline === undefined || eventDefinition.offline;
           if(offline) {
             let record = store.createRecord(eventDefinition.eventName, data);
@@ -39,10 +39,12 @@ function subscribeSSE(appInstance, eventDefinition) {
             store.push(normalized);
           }
           break;
-       case 'notification':
+        }
+       case 'notification': {
           Logger.warn(message);
           notifier.alert(message);
           return;
+       }
      }
    });
 
